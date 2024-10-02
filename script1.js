@@ -93,6 +93,28 @@ form.addEventListener("submit", (e) => {
     !passField.classList.contains("invalid") &&
     !cPassField.classList.contains("invalid")
   ) {
+    // signup.php
+<?php
+include('config.php');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $name = $_POST['name'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $email = $_POST['email'];
+
+    $sql = "INSERT INTO users (username, name, password, email) VALUES ('$username', '$name', '$password', '$email')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
+}
+?>
+
     alert('Signup successful!');
     // Reset form fields
     form.reset();
